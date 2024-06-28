@@ -4,6 +4,8 @@ import viteLogo from "/vite.svg";
 // import "./App.css";
 
 function App(props) {
+  // const [Total, setTotal] = useState(0);
+  const { parts } = props;
   const course = {
     id: 1,
     name: "Half Stack application development",
@@ -26,6 +28,15 @@ function App(props) {
     ],
   };
 
+  // const total = course.parts.reduce((s, p) => s + p);
+  // console.log(total);
+
+  const total =
+    course.parts[0].exercises +
+    course.parts[1].exercises +
+    course.parts[2].exercises;
+  console.log(total);
+
   return (
     <>
       <h1>{course.name}</h1>
@@ -39,6 +50,8 @@ function App(props) {
       <p>
         {course.parts[2].name} {course.parts[2].exercises}
       </p>
+
+      <h2>Total of {total} Exercises</h2>
     </>
   );
 }
