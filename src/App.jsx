@@ -1,10 +1,17 @@
 import { useState } from "react";
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "040-123456", id: 1 },
+    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
+    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
+    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
+  ]);
+
   const [newName, setNewName] = useState("");
   const [newPhn, setPhn] = useState("");
   const [List, setList] = useState([]);
+  const [search, setSearch] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -31,12 +38,22 @@ const App = () => {
     );
   });
 
+  function handleSearch(e) {
+    let filtered = persons.filter((f) =>
+      f.name.toLowerCase().includes(e.target.value)
+    );
+    console.log(filtered);
+  }
+
   return (
     <div>
+      <h2>
+        Filter Shown With <input onChange={handleSearch} />
+      </h2>
       <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input value={newName} onChange={handleChange} />
+          name: <input onChange={handleChange} />
         </div>
         <div>
           number: <input value={newPhn} onChange={handleChange2} />
