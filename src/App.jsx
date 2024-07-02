@@ -23,6 +23,7 @@ const App = () => {
     ],
   };
   // id = 1
+  const total = course.parts.reduce((prev, curr) => prev + curr.exercises, 0);
   const Element1 = course.parts.map((Element) => {
     return (
       <li key={Element.id}>
