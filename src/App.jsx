@@ -45,7 +45,10 @@ const App = () => {
     console.log(e.target.name);
     window.confirm(`Delete ${e.target.name} ?`);
     axios.delete(`http://localhost:3001/persons/${e.target.id}`).then((res) => {
-      setPersons(res.data);
+      const restElement = persons.filter((item) => {
+        item.id !== e.target.id;
+        setPersons(restElement);
+      });
     });
   }
 
@@ -53,12 +56,12 @@ const App = () => {
     axios.get("http://localhost:3001/persons").then((res) => {
       setPersons(res.data);
     });
-  });
+  }, []);
 
   const contactData = persons.map((contact) => {
     return (
       <li key={contact.id}>
-        {contact.name} {contact.number}{" "}
+        {contact.name} {contact.number}
         <button onClick={handleClick} id={contact.id} name={contact.name}>
           Delete
         </button>
