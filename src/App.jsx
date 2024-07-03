@@ -1,13 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123456", id: 1 },
-    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
-    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
-    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
-  ]);
+  const [persons, setPersons] = useState([]);
 
   const [newName, setNewName] = useState("");
   const [newPhn, setPhn] = useState("");
@@ -45,13 +40,29 @@ const App = () => {
     console.log(filtered);
   }
 
-  const contact = persons.map((data) => {
+  function handleClick(e) {
+    console.log(e.target.id);
+    console.log(e.target.name);
+    window.confirm(`Delete ${e.target.name} ?`);
+    axios.delete(`http://localhost:3001/persons/${e.target.id}`).then((res) => {
+      setPersons(res.data);
+    });
+  }
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((res) => {
+      setPersons(res.data);
+    });
+  });
+
+  const contactData = persons.map((contact) => {
     return (
-      <>
-        <li key={data.id}>
-          {data.name} {data.number}
-        </li>
-      </>
+      <li key={contact.id}>
+        {contact.name} {contact.number}{" "}
+        <button onClick={handleClick} id={contact.id} name={contact.name}>
+          Delete
+        </button>
+      </li>
     );
   });
 
@@ -75,7 +86,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>{showData}</ul>
-      <ul>{contact}</ul>
+      <ul>{contactData}</ul>
     </div>
   );
 };
