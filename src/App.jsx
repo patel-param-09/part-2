@@ -3,10 +3,18 @@ import axios from "axios";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
-
   const [newName, setNewName] = useState("");
   const [newPhn, setPhn] = useState("");
   const [List, setList] = useState([]);
+  const [sucess, setSucess] = useState("Added Juha Tauriainen");
+
+  const message = {
+    color: "green",
+    backgroundColor: "#D3D3D3",
+    border: "3px solid green",
+    padding: "10px",
+    borderRadius: "7px",
+  };
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -71,10 +79,11 @@ const App = () => {
 
   return (
     <div>
+      <h2 style={message}>{sucess}</h2>
+      <h2>Phonebook</h2>
       <h2>
         Filter Shown With <input onChange={handleSearch} />
       </h2>
-      <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
           name: <input onChange={handleChange} />
